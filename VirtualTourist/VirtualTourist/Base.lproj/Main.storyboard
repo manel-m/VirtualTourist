@@ -18,9 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pTE-j3-ya8">
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pTE-j3-ya8">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Virtual Tourist" id="X04-4E-gWw">
                                         <barButtonItem key="rightBarButtonItem" style="plain" id="5cS-mw-zjo">
@@ -33,13 +32,29 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eDE-Bh-G49">
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="eDE-Bh-G49" firstAttribute="top" secondItem="pTE-j3-ya8" secondAttribute="bottom" id="122-bY-YAb"/>
+                            <constraint firstItem="eDE-Bh-G49" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Lf8-l8-Kj2"/>
+                            <constraint firstItem="pTE-j3-ya8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Stc-PF-lX5"/>
+                            <constraint firstItem="eDE-Bh-G49" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="axh-4y-LOY"/>
+                            <constraint firstItem="pTE-j3-ya8" firstAttribute="trailing" secondItem="eDE-Bh-G49" secondAttribute="trailing" id="clh-Eq-glG"/>
+                            <constraint firstItem="pTE-j3-ya8" firstAttribute="leading" secondItem="eDE-Bh-G49" secondAttribute="leading" id="qyH-dn-PZV"/>
+                            <constraint firstItem="eDE-Bh-G49" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="x17-YM-p79"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="eDE-Bh-G49" id="yWe-fY-7dB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="32.799999999999997" y="32.833583208395808"/>
         </scene>
     </scenes>
 </document>
