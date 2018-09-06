@@ -18,7 +18,7 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var deleteLabel: UILabel!
     let locationManager = CLLocationManager()
-    //let annotation = MKPointAnnotation()
+    var editOn: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,12 +56,14 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
         self.doneButton.isHidden = false
         self.deleteLabel.text = "Tap pins to delete"
         self.editButton.isEnabled = false
+        editOn = true
     }
     
     @IBAction func doneButton(_ sender: Any) {
         self.doneButton.isHidden = true
         self.deleteLabel.text = ""
         self.editButton.isEnabled = true
+        editOn = false
     }
     
     
@@ -73,7 +75,10 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("didSelect \(view)")
-        self.mapView.removeAnnotation(view.annotation! )
+        if editOn {
+            self.mapView.removeAnnotation(view.annotation!)
+        }
+        
     }
     
 }
