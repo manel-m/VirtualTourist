@@ -13,18 +13,22 @@ import CoreLocation
 class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
+    
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var deleteLabel: UILabel!
     let locationManager = CLLocationManager()
+    //let annotation = MKPointAnnotation()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self
+        self.doneButton.isHidden = true
+        self.deleteLabel.text = ""
+        
         // Do any additional setup after loading the view, typically from a nib.
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        if #available(iOS 8.0, *) {
-//            locationManager.requestAlwaysAuthorization()
-//        } else {
-//            // Fallback on earlier versions
-//        }
         locationManager.startUpdatingLocation()
         // add gesture recognizer
        
@@ -32,8 +36,9 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
         longPress.minimumPressDuration = 1.5 // in seconds
         //add gesture recognition
         mapView.addGestureRecognizer(longPress)
+        
+
     }
-    
     @objc func mapLongPress(_ recognizer: UIGestureRecognizer) {
         
         print("A long press has been detected.")
@@ -47,12 +52,29 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
         
         
     }
+    @IBAction func editButton(_ sender: Any) {
+        self.doneButton.isHidden = false
+        self.deleteLabel.text = "Tap pins to delete"
+        self.editButton.isEnabled = false
+    }
+    
+    @IBAction func doneButton(_ sender: Any) {
+        self.doneButton.isHidden = true
+        self.deleteLabel.text = ""
+        self.editButton.isEnabled = true
+    }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("didSelect \(view)")
+        self.mapView.removeAnnotation(view.annotation! )
+    }
     
 }
 

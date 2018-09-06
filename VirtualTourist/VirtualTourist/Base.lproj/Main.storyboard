@@ -27,6 +27,9 @@
                                                 <rect key="frame" x="276" y="7" width="83" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" title="Edit"/>
+                                                <connections>
+                                                    <action selector="editButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TKf-rF-WrO"/>
+                                                </connections>
                                             </button>
                                         </barButtonItem>
                                     </navigationItem>
@@ -35,20 +38,44 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eDE-Bh-G49">
                                 <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                             </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to Delete pins " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HdF-gu-YbP">
+                                <rect key="frame" x="29" y="596" width="305" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ns6-8M-TiJ">
+                                <rect key="frame" x="151" y="633" width="46" height="30"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="doneButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YK7-Vh-tLR"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="HdF-gu-YbP" firstAttribute="top" secondItem="pTE-j3-ya8" secondAttribute="bottom" constant="552" id="00g-2y-ikQ"/>
                             <constraint firstItem="eDE-Bh-G49" firstAttribute="top" secondItem="pTE-j3-ya8" secondAttribute="bottom" id="122-bY-YAb"/>
+                            <constraint firstItem="HdF-gu-YbP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="29" id="Dfk-ox-Vmt"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ns6-8M-TiJ" secondAttribute="trailing" constant="178" id="IEt-SK-0HA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="HdF-gu-YbP" secondAttribute="trailing" constant="41" id="KPM-pb-N4P"/>
                             <constraint firstItem="eDE-Bh-G49" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Lf8-l8-Kj2"/>
                             <constraint firstItem="pTE-j3-ya8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Stc-PF-lX5"/>
+                            <constraint firstItem="ns6-8M-TiJ" firstAttribute="top" secondItem="HdF-gu-YbP" secondAttribute="bottom" constant="8" id="Vdh-wE-7of"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ns6-8M-TiJ" secondAttribute="bottom" constant="4" id="Zdz-HS-3l3"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="HdF-gu-YbP" secondAttribute="bottom" constant="42" id="aeh-xU-Ie2"/>
                             <constraint firstItem="eDE-Bh-G49" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="axh-4y-LOY"/>
                             <constraint firstItem="pTE-j3-ya8" firstAttribute="trailing" secondItem="eDE-Bh-G49" secondAttribute="trailing" id="clh-Eq-glG"/>
+                            <constraint firstItem="ns6-8M-TiJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="151" id="f6N-ZZ-EmY"/>
                             <constraint firstItem="pTE-j3-ya8" firstAttribute="leading" secondItem="eDE-Bh-G49" secondAttribute="leading" id="qyH-dn-PZV"/>
                             <constraint firstItem="eDE-Bh-G49" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="x17-YM-p79"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="deleteLabel" destination="HdF-gu-YbP" id="wfa-RX-Kmw"/>
+                        <outlet property="doneButton" destination="ns6-8M-TiJ" id="dZk-vM-IE8"/>
+                        <outlet property="editButton" destination="5cS-mw-zjo" id="5Va-HW-5KW"/>
                         <outlet property="mapView" destination="eDE-Bh-G49" id="yWe-fY-7dB"/>
                     </connections>
                 </viewController>
