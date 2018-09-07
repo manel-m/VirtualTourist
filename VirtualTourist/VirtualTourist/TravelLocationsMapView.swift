@@ -13,7 +13,6 @@ import CoreLocation
 class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
-    
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var deleteLabel: UILabel!

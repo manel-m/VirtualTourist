@@ -12,6 +12,7 @@
 		99199703213BB03900A9610A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99199701213BB03900A9610A /* Main.storyboard */; };
 		99199705213BB03900A9610A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99199704213BB03900A9610A /* Assets.xcassets */; };
 		99199708213BB03900A9610A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99199706213BB03900A9610A /* LaunchScreen.storyboard */; };
+		99199710214242FA00A9610A /* PhotoAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919970F214242FA00A9610A /* PhotoAlbumView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		99199704213BB03900A9610A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		99199707213BB03900A9610A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		99199709213BB03900A9610A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9919970F214242FA00A9610A /* PhotoAlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				991996FD213BB03900A9610A /* AppDelegate.swift */,
 				991996FF213BB03900A9610A /* TravelLocationsMapView.swift */,
+				9919970F214242FA00A9610A /* PhotoAlbumView.swift */,
 				99199701213BB03900A9610A /* Main.storyboard */,
 				99199704213BB03900A9610A /* Assets.xcassets */,
 				99199706213BB03900A9610A /* LaunchScreen.storyboard */,
@@ -138,6 +141,7 @@
 			files = (
 				99199700213BB03900A9610A /* TravelLocationsMapView.swift in Sources */,
 				991996FE213BB03900A9610A /* AppDelegate.swift in Sources */,
+				99199710214242FA00A9610A /* PhotoAlbumView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
