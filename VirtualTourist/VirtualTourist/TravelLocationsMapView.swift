@@ -77,7 +77,12 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
         if editOn {
             self.mapView.removeAnnotation(view.annotation!)
         } else {
-            
+            print("pin selected")
+            print(view.annotation?.coordinate)
+            let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "PhotoAlbumView") as! PhotoAlbumView
+            mapVC.annotation = view.annotation
+            self.navigationController?.pushViewController(mapVC, animated: true)
+           
         }
         
     }

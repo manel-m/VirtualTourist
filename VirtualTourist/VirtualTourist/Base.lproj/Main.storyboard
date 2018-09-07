@@ -49,7 +49,6 @@
                                 <state key="normal" title="Done"/>
                                 <connections>
                                     <action selector="doneButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YK7-Vh-tLR"/>
-                                    <segue destination="zvZ-0h-rEa" kind="show" id="KNc-4S-l7v"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -96,10 +95,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="PU8-DP-HBq">
-                                <rect key="frame" x="0.0" y="78" width="375" height="152"/>
+                                <rect key="frame" x="0.0" y="34" width="375" height="196"/>
                                 <subviews>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="epf-Pr-auC">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="152"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="196"/>
                                     </mapView>
                                 </subviews>
                             </stackView>
@@ -156,7 +155,7 @@
                         <viewLayoutGuide key="safeArea" id="aIM-0C-Gei"/>
                     </view>
                     <connections>
-                        <outlet property="mapVitw" destination="epf-Pr-auC" id="uYD-GN-yyy"/>
+                        <outlet property="mapView" destination="epf-Pr-auC" id="mhR-qG-LhX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xk6-Mg-Wd9" userLabel="First Responder" sceneMemberID="firstResponder"/>
