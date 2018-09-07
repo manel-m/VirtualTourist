@@ -49,6 +49,7 @@
                                 <state key="normal" title="Done"/>
                                 <connections>
                                     <action selector="doneButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YK7-Vh-tLR"/>
+                                    <segue destination="zvZ-0h-rEa" kind="show" id="KNc-4S-l7v"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -86,20 +87,81 @@
             </objects>
             <point key="canvasLocation" x="785" y="-142"/>
         </scene>
-        <!--View Controller-->
+        <!--Photo Album View-->
         <scene sceneID="yB6-55-DvG">
             <objects>
-                <viewController id="zvZ-0h-rEa" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhotoAlbumView" id="zvZ-0h-rEa" customClass="PhotoAlbumView" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Yl0-lC-7XJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="PU8-DP-HBq">
+                                <rect key="frame" x="0.0" y="78" width="375" height="152"/>
+                                <subviews>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="epf-Pr-auC">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="152"/>
+                                    </mapView>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="fJ7-QI-aKf">
+                                <rect key="frame" x="0.0" y="238" width="375" height="385"/>
+                                <subviews>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ff3-2X-t9r">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="385"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5f2-zr-0iJ">
+                                            <size key="itemSize" width="375" height="394"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="PkG-4Q-T7L">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="394"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="394"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </view>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Syt-cp-2Uy">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pFy-bX-7nd">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <state key="normal" title="New Collection"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Syt-cp-2Uy" firstAttribute="trailing" secondItem="aIM-0C-Gei" secondAttribute="trailing" id="1dH-YT-avr"/>
+                            <constraint firstItem="Syt-cp-2Uy" firstAttribute="top" secondItem="fJ7-QI-aKf" secondAttribute="bottom" id="Ici-Tx-mIJ"/>
+                            <constraint firstItem="aIM-0C-Gei" firstAttribute="bottom" secondItem="fJ7-QI-aKf" secondAttribute="bottom" constant="44" id="J3M-tb-aNP"/>
+                            <constraint firstItem="Syt-cp-2Uy" firstAttribute="bottom" secondItem="aIM-0C-Gei" secondAttribute="bottom" id="d5f-Cm-WC1"/>
+                            <constraint firstItem="Syt-cp-2Uy" firstAttribute="leading" secondItem="aIM-0C-Gei" secondAttribute="leading" id="g5x-M4-0cZ"/>
+                            <constraint firstItem="fJ7-QI-aKf" firstAttribute="top" secondItem="PU8-DP-HBq" secondAttribute="bottom" constant="8" id="h8d-sa-AqW"/>
+                            <constraint firstItem="PU8-DP-HBq" firstAttribute="trailing" secondItem="aIM-0C-Gei" secondAttribute="trailing" id="ifQ-kl-vYN"/>
+                            <constraint firstItem="PU8-DP-HBq" firstAttribute="leading" secondItem="aIM-0C-Gei" secondAttribute="leading" id="m03-UM-YYB"/>
+                            <constraint firstItem="aIM-0C-Gei" firstAttribute="bottom" secondItem="PU8-DP-HBq" secondAttribute="bottom" constant="437" id="mh8-L3-6CO"/>
+                            <constraint firstItem="fJ7-QI-aKf" firstAttribute="trailing" secondItem="aIM-0C-Gei" secondAttribute="trailing" id="ueb-eU-aWa"/>
+                            <constraint firstItem="PU8-DP-HBq" firstAttribute="top" secondItem="aIM-0C-Gei" secondAttribute="top" constant="14" id="vCn-k4-sj3"/>
+                            <constraint firstItem="fJ7-QI-aKf" firstAttribute="leading" secondItem="aIM-0C-Gei" secondAttribute="leading" id="zOF-JO-p1I"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="aIM-0C-Gei"/>
                     </view>
+                    <connections>
+                        <outlet property="mapVitw" destination="epf-Pr-auC" id="uYD-GN-yyy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xk6-Mg-Wd9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1576" y="-147"/>
+            <point key="canvasLocation" x="1575.2" y="-147.07646176911544"/>
         </scene>
     </scenes>
 </document>

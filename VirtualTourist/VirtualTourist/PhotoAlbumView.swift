@@ -11,4 +11,6 @@ import UIKit
 import MapKit
 class PhotoAlbumView: UIViewController {
     
+    @IBOutlet weak var mapVitw: MKMapView!
+    
 }

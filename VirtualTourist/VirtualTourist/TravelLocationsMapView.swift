@@ -76,6 +76,8 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
         print("didSelect \(view)")
         if editOn {
             self.mapView.removeAnnotation(view.annotation!)
+        } else {
+            
         }
         
     }
