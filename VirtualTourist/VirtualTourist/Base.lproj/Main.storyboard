@@ -133,6 +133,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pFy-bX-7nd">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <state key="normal" title="New Collection"/>
+                                        <connections>
+                                            <action selector="searchByLatLon" destination="zvZ-0h-rEa" eventType="touchUpInside" id="Ot4-YB-GBo"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
