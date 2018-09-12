@@ -17,10 +17,12 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
     
     
     var annotation : MKAnnotation?
-    var imageUrls : [URL] = []
+    var imageData : [Data] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Call API
+        searchByLatLon()
        
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -36,6 +38,8 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
         objectAnnotation.coordinate = pinLocation
         //objectAnnotation.title = "My Location"
         self.mapView.addAnnotation(objectAnnotation)
+        
+
     }
     
     private func bboxString() -> String {
@@ -51,7 +55,7 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
         }
     }
     
-    @IBAction func searchByLatLon () {
+    func searchByLatLon () {
         let methodParameters = [
             Constants.FlickrParameterKeys.Method: Constants.FlickrParameterValues.SearchMethod,
             Constants.FlickrParameterKeys.APIKey: Constants.FlickrParameterValues.APIKey,
@@ -119,7 +123,7 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
                 displayError("Cannot find keys '\(Constants.FlickrResponseKeys.Photos)' in \(parsedResult)")
                 return
             }
-            print(photosDictionary)
+            //print(photosDictionary)
             /* GUARD: Is the "photo" key in photosDictionary? */
             guard let photosArray = photosDictionary[Constants.FlickrResponseKeys.Photo] as? [[String: AnyObject]] else {
                 displayError("Cannot find key '\(Constants.FlickrResponseKeys.Photo)' in \(photosDictionary)")
@@ -134,9 +138,14 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
             for photo in photosArray {
                 let imageUrlString = photo[Constants.FlickrResponseKeys.MediumURL] as? String
                 let imageUrl = URL(string: imageUrlString!)
-                self.imageUrls.append(imageUrl!)
+                if let imageData = try? Data(contentsOf: imageUrl!) {
+                    self.imageData.append(imageData)
                 }
-            print(self.imageUrls)
+                
+                }
+            performUIUpdatesOnMain {
+                self.collectionView.reloadData()
+            }
 //            // if an image exists at the url, set the image and title
 //            let imageURL = URL(string: imageUrlString)
 //            if let imageData = try? Data(contentsOf: imageURL!) {
@@ -170,20 +179,23 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
             let queryItem = URLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
         }
-        print(components.url)
+        //print(components.url)
         return components.url!
     }
     
     // collection view
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.imageUrls.count
+        print("imageData.count = \(self.imageData.count)")
+        return self.imageData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoAlbumViewCell", for: indexPath) as! PhotoAlbumViewCell
-        let urlimage = self.imageUrls[(indexPath as NSIndexPath).row]
+        let image = self.imageData[(indexPath as NSIndexPath).row]
+        // Set the image
+        cell.photoImageView?.image = UIImage(data: image)
         
         // Set the name and image
         //cell.nameLabel.text = villain.name
