@@ -109,21 +109,33 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="385"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5f2-zr-0iJ">
-                                            <size key="itemSize" width="375" height="394"/>
+                                            <size key="itemSize" width="150" height="142"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="PkG-4Q-T7L">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="394"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="PhotoAlbumViewCell" id="tR0-BD-Cmt" userLabel="PhotoAlbumViewCell" customClass="PhotoAlbumViewCell" customModule="VirtualTourist">
+                                                <rect key="frame" x="0.0" y="0.0" width="150" height="142"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="394"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="142"/>
                                                     <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ERs-9H-RVO" userLabel="photoImageView">
+                                                            <rect key="frame" x="0.0" y="-6" width="150" height="148"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                    </subviews>
                                                 </view>
+                                                <connections>
+                                                    <outlet property="photoImageView" destination="ERs-9H-RVO" id="I2g-4q-M0j"/>
+                                                </connections>
                                             </collectionViewCell>
                                         </cells>
+                                        <connections>
+                                            <outlet property="dataSource" destination="zvZ-0h-rEa" id="9Fr-06-XUW"/>
+                                        </connections>
                                     </collectionView>
                                 </subviews>
                             </stackView>
@@ -158,12 +170,13 @@
                         <viewLayoutGuide key="safeArea" id="aIM-0C-Gei"/>
                     </view>
                     <connections>
+                        <outlet property="collectionView" destination="ff3-2X-t9r" id="oZW-36-KdO"/>
                         <outlet property="mapView" destination="epf-Pr-auC" id="mhR-qG-LhX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xk6-Mg-Wd9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1575.2" y="-147.07646176911544"/>
+            <point key="canvasLocation" x="1569" y="-143"/>
         </scene>
     </scenes>
 </document>

@@ -15,6 +15,7 @@
 		99199710214242FA00A9610A /* PhotoAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919970F214242FA00A9610A /* PhotoAlbumView.swift */; };
 		991997122146360400A9610A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991997112146360400A9610A /* Constants.swift */; };
 		9919971421463C7A00A9610A /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919971321463C7A00A9610A /* GCDBlackBox.swift */; };
+		991997162148CBD300A9610A /* PhotoAlbumViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991997152148CBD300A9610A /* PhotoAlbumViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		9919970F214242FA00A9610A /* PhotoAlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumView.swift; sourceTree = "<group>"; };
 		991997112146360400A9610A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9919971321463C7A00A9610A /* GCDBlackBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
+		991997152148CBD300A9610A /* PhotoAlbumViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				991997112146360400A9610A /* Constants.swift */,
 				991996FF213BB03900A9610A /* TravelLocationsMapView.swift */,
 				9919970F214242FA00A9610A /* PhotoAlbumView.swift */,
+				991997152148CBD300A9610A /* PhotoAlbumViewCell.swift */,
 				99199701213BB03900A9610A /* Main.storyboard */,
 				99199704213BB03900A9610A /* Assets.xcassets */,
 				99199706213BB03900A9610A /* LaunchScreen.storyboard */,
@@ -146,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99199700213BB03900A9610A /* TravelLocationsMapView.swift in Sources */,
+				991997162148CBD300A9610A /* PhotoAlbumViewCell.swift in Sources */,
 				991996FE213BB03900A9610A /* AppDelegate.swift in Sources */,
 				99199710214242FA00A9610A /* PhotoAlbumView.swift in Sources */,
 				991997122146360400A9610A /* Constants.swift in Sources */,

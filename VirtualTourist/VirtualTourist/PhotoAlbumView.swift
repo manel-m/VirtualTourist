@@ -9,10 +9,15 @@
 import Foundation
 import UIKit
 import MapKit
-class PhotoAlbumView: UIViewController {
+class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectionViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var collectionView: UICollectionView!
+
+    
+    
     var annotation : MKAnnotation?
+    var imageUrls : [URL] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,19 +120,38 @@ class PhotoAlbumView: UIViewController {
                 return
             }
             print(photosDictionary)
-            
-            /* GUARD: Is "pages" key in the photosDictionary? */
-            guard let totalPages = photosDictionary[Constants.FlickrResponseKeys.Pages] as? Int else {
-                displayError("Cannot find key '\(Constants.FlickrResponseKeys.Pages)' in \(photosDictionary)")
+            /* GUARD: Is the "photo" key in photosDictionary? */
+            guard let photosArray = photosDictionary[Constants.FlickrResponseKeys.Photo] as? [[String: AnyObject]] else {
+                displayError("Cannot find key '\(Constants.FlickrResponseKeys.Photo)' in \(photosDictionary)")
                 return
             }
+            if photosArray.count == 0 {
+                displayError("No Photos Found. Search Again.")
+ 
+            }
+  
+           
+            for photo in photosArray {
+                let imageUrlString = photo[Constants.FlickrResponseKeys.MediumURL] as? String
+                let imageUrl = URL(string: imageUrlString!)
+                self.imageUrls.append(imageUrl!)
+                }
+            print(self.imageUrls)
+//            // if an image exists at the url, set the image and title
+//            let imageURL = URL(string: imageUrlString)
+//            if let imageData = try? Data(contentsOf: imageURL!) {
+//                //array[i]=imageData
+//                performUIUpdatesOnMain {
+//                    self.setUIEnabled(true)
+//                    self.photoImageView.image = UIImage(data: imageData)
+//                    self.photoTitleLabel.text = photoTitle ?? "(Untitled)"
+//                }
+//            } else {
+//                displayError("Image does not exist at \(imageURL)")
+//            }
             
-            // pick a random page!
-//            let pageLimit = min(totalPages, 20)
-//            let randomPage = Int(arc4random_uniform(UInt32(pageLimit))) + 1
-//            self.displayImageFromFlickrBySearch(methodParameters, withPageNumber: randomPage)
-        }
-        
+            
+            }
         // start the task!
         task.resume()
         
@@ -150,4 +174,22 @@ class PhotoAlbumView: UIViewController {
         return components.url!
     }
     
+    // collection view
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.imageUrls.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoAlbumViewCell", for: indexPath) as! PhotoAlbumViewCell
+        let urlimage = self.imageUrls[(indexPath as NSIndexPath).row]
+        
+        // Set the name and image
+        //cell.nameLabel.text = villain.name
+        //cell.villainImageView?.image = UIImage(named: villain.imageName)
+        //cell.schemeLabel.text = "Scheme: \(villain.evilScheme)"
+        
+        return cell
+    }
 }
