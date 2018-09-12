@@ -13,14 +13,20 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
-
-    
+    @IBOutlet weak var flawLayout: UICollectionViewFlowLayout!
     
     var annotation : MKAnnotation?
     var imageData : [Data] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // flowLayout
+        let space: CGFloat = 3.0
+        let dimension = (view.frame.size.width - (2 * space)) / 3.0
+        
+        flawLayout.minimumInteritemSpacing = space
+        flawLayout.minimumLineSpacing = space
+        flawLayout.itemSize = CGSize(width: dimension, height: dimension)
         // Call API
         searchByLatLon()
        
@@ -133,8 +139,6 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
                 displayError("No Photos Found. Search Again.")
  
             }
-  
-           
             for photo in photosArray {
                 let imageUrlString = photo[Constants.FlickrResponseKeys.MediumURL] as? String
                 let imageUrl = URL(string: imageUrlString!)
@@ -146,20 +150,6 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
             performUIUpdatesOnMain {
                 self.collectionView.reloadData()
             }
-//            // if an image exists at the url, set the image and title
-//            let imageURL = URL(string: imageUrlString)
-//            if let imageData = try? Data(contentsOf: imageURL!) {
-//                //array[i]=imageData
-//                performUIUpdatesOnMain {
-//                    self.setUIEnabled(true)
-//                    self.photoImageView.image = UIImage(data: imageData)
-//                    self.photoTitleLabel.text = photoTitle ?? "(Untitled)"
-//                }
-//            } else {
-//                displayError("Image does not exist at \(imageURL)")
-//            }
-            
-            
             }
         // start the task!
         task.resume()
@@ -179,7 +169,6 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
             let queryItem = URLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
         }
-        //print(components.url)
         return components.url!
     }
     
@@ -196,11 +185,6 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
         let image = self.imageData[(indexPath as NSIndexPath).row]
         // Set the image
         cell.photoImageView?.image = UIImage(data: image)
-        
-        // Set the name and image
-        //cell.nameLabel.text = villain.name
-        //cell.villainImageView?.image = UIImage(named: villain.imageName)
-        //cell.schemeLabel.text = "Scheme: \(villain.evilScheme)"
         
         return cell
     }

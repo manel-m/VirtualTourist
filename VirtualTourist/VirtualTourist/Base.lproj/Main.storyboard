@@ -168,6 +168,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="ff3-2X-t9r" id="oZW-36-KdO"/>
+                        <outlet property="flawLayout" destination="5f2-zr-0iJ" id="h00-x1-qdF"/>
                         <outlet property="mapView" destination="epf-Pr-auC" id="mhR-qG-LhX"/>
                     </connections>
                 </viewController>
