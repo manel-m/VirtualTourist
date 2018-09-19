@@ -66,8 +66,8 @@
 		991996FC213BB03900A9610A /* VirtualTourist */ = {
 			isa = PBXGroup;
 			children = (
-				99199717214F373300A9610A /* Model */,
 				991996FD213BB03900A9610A /* AppDelegate.swift */,
+				99199717214F373300A9610A /* Model */,
 				991997112146360400A9610A /* Constants.swift */,
 				991996FF213BB03900A9610A /* TravelLocationsMapView.swift */,
 				9919970F214242FA00A9610A /* PhotoAlbumView.swift */,

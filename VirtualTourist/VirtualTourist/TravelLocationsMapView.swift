@@ -18,6 +18,7 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
     @IBOutlet weak var deleteLabel: UILabel!
     let locationManager = CLLocationManager()
     var editOn: Bool = false
+    var dataController:DataController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,9 +49,21 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
         let newPin = MKPointAnnotation()
         newPin.coordinate = touchedAtCoordinate
         mapView.addAnnotation(newPin)
+        addPin(latitude: newPin.coordinate.latitude, longtitude: newPin.coordinate.longitude)
         
         
     }
+    func addPin (latitude: Double, longtitude: Double){
+        let pin = Pin(context: dataController.viewContext)
+        pin.latitude = latitude
+        pin.longtitude = longtitude
+        try? dataController.viewContext.save()
+    }
+//    func deletePin (){
+//        let pinToDelete = fetchedResultsController.object(at: indexPath)
+//        dataController.viewContext.delete(pinToDelete)
+//        try? dataController.viewContext.save()
+//    }
     @IBAction func editButton(_ sender: Any) {
         self.doneButton.isHidden = false
         self.deleteLabel.text = "Tap pins to delete"
@@ -77,8 +90,8 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
         if editOn {
             self.mapView.removeAnnotation(view.annotation!)
         } else {
-            print("pin selected")
-            print(view.annotation?.coordinate)
+//            print("pin selected")
+//            print(view.annotation?.coordinate)
             let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "PhotoAlbumView") as! PhotoAlbumView
             mapVC.annotation = view.annotation
             self.navigationController?.pushViewController(mapVC, animated: true)
