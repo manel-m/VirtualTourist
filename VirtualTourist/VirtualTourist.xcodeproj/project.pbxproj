@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		990EC05C2155CE8A00C1405D /* PinAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990EC05B2155CE8A00C1405D /* PinAnnotation.swift */; };
 		991996FE213BB03900A9610A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991996FD213BB03900A9610A /* AppDelegate.swift */; };
 		99199700213BB03900A9610A /* TravelLocationsMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991996FF213BB03900A9610A /* TravelLocationsMapView.swift */; };
 		99199703213BB03900A9610A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99199701213BB03900A9610A /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		990EC05B2155CE8A00C1405D /* PinAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinAnnotation.swift; sourceTree = "<group>"; };
 		991996FA213BB03900A9610A /* VirtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		991996FD213BB03900A9610A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		991996FF213BB03900A9610A /* TravelLocationsMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelLocationsMapView.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				99199706213BB03900A9610A /* LaunchScreen.storyboard */,
 				99199709213BB03900A9610A /* Info.plist */,
 				9919971321463C7A00A9610A /* GCDBlackBox.swift */,
+				990EC05B2155CE8A00C1405D /* PinAnnotation.swift */,
 			);
 			path = VirtualTourist;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 				99199710214242FA00A9610A /* PhotoAlbumView.swift in Sources */,
 				9919971C21508BA100A9610A /* DataController.swift in Sources */,
 				991997122146360400A9610A /* Constants.swift in Sources */,
+				990EC05C2155CE8A00C1405D /* PinAnnotation.swift in Sources */,
 				9919971421463C7A00A9610A /* GCDBlackBox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

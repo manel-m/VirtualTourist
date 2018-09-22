@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import CoreData
 
 class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
@@ -19,12 +20,29 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
     let locationManager = CLLocationManager()
     var editOn: Bool = false
     var dataController:DataController!
+    var pins :[Pin] = []
     
+    func createAnnotations() {
+        for pin in pins {
+            let annotation = PinAnnotation(pin)
+            mapView.addAnnotation(annotation)
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
         self.doneButton.isHidden = true
         self.deleteLabel.text = ""
+        // setup Fetching
+        let fetchRequest:NSFetchRequest<Pin> = Pin.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        if let results = try? dataController.viewContext.fetch(fetchRequest){
+            pins = results
+            //reload  Data
+            self.createAnnotations()
+        }
+        
         
         // Do any additional setup after loading the view, typically from a nib.
         locationManager.delegate = self
@@ -40,30 +58,40 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
 
     }
     @objc func mapLongPress(_ recognizer: UIGestureRecognizer) {
+        if (editOn || recognizer.state != .began) {
+            return
+        }
         
         print("A long press has been detected.")
         
         let touchedAt = recognizer.location(in: self.mapView) // adds the location on the view it was pressed
         let touchedAtCoordinate : CLLocationCoordinate2D = mapView.convert(touchedAt, toCoordinateFrom: self.mapView) // will get coordinates
         
-        let newPin = MKPointAnnotation()
-        newPin.coordinate = touchedAtCoordinate
-        mapView.addAnnotation(newPin)
-        addPin(latitude: newPin.coordinate.latitude, longtitude: newPin.coordinate.longitude)
-        
-        
+        addPin(latitude: touchedAtCoordinate.latitude, longtitude: touchedAtCoordinate.longitude)
     }
+    
     func addPin (latitude: Double, longtitude: Double){
         let pin = Pin(context: dataController.viewContext)
         pin.latitude = latitude
         pin.longtitude = longtitude
+        pin.creationDate = Date()
+        try? dataController.viewContext.save()
+        pins.append(pin)
+        let annotation = PinAnnotation(pin)
+        mapView.addAnnotation(annotation)
+    }
+    
+    func deletePin (annotation : MKPointAnnotation){
+        //let pinToDelete = fetchedResultsController.object(at: indexPath)
+        //dataController.viewContext.delete(pinToDelete)
+        let pin = (annotation as! PinAnnotation).pin
+        pins.remove(at: pins.index(of: pin!)!)
+
+        mapView.removeAnnotation(annotation)
+
+        dataController.viewContext.delete(pin!)
         try? dataController.viewContext.save()
     }
-//    func deletePin (){
-//        let pinToDelete = fetchedResultsController.object(at: indexPath)
-//        dataController.viewContext.delete(pinToDelete)
-//        try? dataController.viewContext.save()
-//    }
     @IBAction func editButton(_ sender: Any) {
         self.doneButton.isHidden = false
         self.deleteLabel.text = "Tap pins to delete"
@@ -88,7 +116,8 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("didSelect \(view)")
         if editOn {
-            self.mapView.removeAnnotation(view.annotation!)
+            //self.mapView.removeAnnotation(view.annotation!)
+            self.deletePin(annotation: view.annotation as! MKPointAnnotation)
         } else {
 //            print("pin selected")
 //            print(view.annotation?.coordinate)
