@@ -28,6 +28,7 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
             mapView.addAnnotation(annotation)
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
@@ -82,16 +83,20 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
     }
     
     func deletePin (annotation : MKPointAnnotation){
-        //let pinToDelete = fetchedResultsController.object(at: indexPath)
-        //dataController.viewContext.delete(pinToDelete)
         let pin = (annotation as! PinAnnotation).pin
-        pins.remove(at: pins.index(of: pin!)!)
 
+        // remove pin from memory array
+        let pinIndex = pins.index(of: pin!)!
+        pins.remove(at: pinIndex)
+
+        // remove annotation from the map
         mapView.removeAnnotation(annotation)
 
+        // remove pin from persistence store
         dataController.viewContext.delete(pin!)
         try? dataController.viewContext.save()
     }
+    
     @IBAction func editButton(_ sender: Any) {
         self.doneButton.isHidden = false
         self.deleteLabel.text = "Tap pins to delete"

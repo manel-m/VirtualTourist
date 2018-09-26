@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import MapKit
+import CoreData
 class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectionViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
@@ -17,6 +18,7 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
     
     var annotation : MKAnnotation?
     var imageData : [Data] = []
+//    var fetchedResultsController:NSFetchedResultsController<Photo>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +49,10 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
         
 
     }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        fetchedResultsController = nil
+//    }
     
     private func bboxString() -> String {
         // ensure bbox is bounded by minimum and maximums
@@ -69,7 +75,8 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
             Constants.FlickrParameterKeys.SafeSearch: Constants.FlickrParameterValues.UseSafeSearch,
             Constants.FlickrParameterKeys.Extras: Constants.FlickrParameterValues.MediumURL,
             Constants.FlickrParameterKeys.Format: Constants.FlickrParameterValues.ResponseFormat,
-            Constants.FlickrParameterKeys.NoJSONCallback: Constants.FlickrParameterValues.DisableJSONCallback
+            Constants.FlickrParameterKeys.NoJSONCallback: Constants.FlickrParameterValues.DisableJSONCallback,
+            Constants.FlickrParameterKeys.PerPage: Constants.FlickrParameterValues.PerPage
         ]
         displayImageFromFlickrBySearch(methodParameters as [String:AnyObject])
     }
@@ -139,14 +146,18 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
                 displayError("No Photos Found. Search Again.")
  
             }
+//            var count = 0
             for photo in photosArray {
                 let imageUrlString = photo[Constants.FlickrResponseKeys.MediumURL] as? String
                 let imageUrl = URL(string: imageUrlString!)
                 if let imageData = try? Data(contentsOf: imageUrl!) {
                     self.imageData.append(imageData)
                 }
-                
-                }
+//                count += 1
+//                if (count == 20) {
+//                    break
+//                }
+            }
             performUIUpdatesOnMain {
                 self.collectionView.reloadData()
             }
@@ -187,5 +198,12 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
         cell.photoImageView?.image = UIImage(data: image)
         
         return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath:IndexPath) {
+        
+//        let detailController = self.storyboard!.instantiateViewController(withIdentifier: "VillainDetailViewController") as! VillainDetailViewController
+//        detailController.villain = self.allVillains[(indexPath as NSIndexPath).row]
+//        self.navigationController!.pushViewController(detailController, animated: true)
+        
     }
 }
