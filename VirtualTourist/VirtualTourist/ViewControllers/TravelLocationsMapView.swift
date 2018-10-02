@@ -76,6 +76,7 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
         pin.latitude = latitude
         pin.longtitude = longtitude
         pin.creationDate = Date()
+        //downloadSavePhotos()
         try? dataController.viewContext.save()
         pins.append(pin)
         let annotation = PinAnnotation(pin)
@@ -128,6 +129,8 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
 //            print(view.annotation?.coordinate)
             let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "PhotoAlbumView") as! PhotoAlbumView
             mapVC.annotation = view.annotation
+            mapVC.dataController = dataController
+            mapVC.pin = (view.annotation as! PinAnnotation).pin
             self.navigationController?.pushViewController(mapVC, animated: true)
            
         }

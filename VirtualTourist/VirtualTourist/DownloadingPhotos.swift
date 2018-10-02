@@ -1,87 +1,42 @@
 //
-//  PhotoAlbumView.swift
+//  DownloadingPhotos.swift
 //  VirtualTourist
 //
-//  Created by Manel matougui on 9/6/18.
+//  Created by Manel matougui on 9/28/18.
 //  Copyright © 2018 udacity. All rights reserved.
 //
 
 import Foundation
 import UIKit
 import MapKit
-import CoreData
-class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectionViewDelegate {
-    
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var flawLayout: UICollectionViewFlowLayout!
-    
-    var annotation : MKAnnotation?
-    var imageData : [Data] = []
-//    var fetchedResultsController:NSFetchedResultsController<Photo>!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // flowLayout
-        let space: CGFloat = 3.0
-        let dimension = (view.frame.size.width - (2 * space)) / 3.0
-        
-        flawLayout.minimumInteritemSpacing = space
-        flawLayout.minimumLineSpacing = space
-        flawLayout.itemSize = CGSize(width: dimension, height: dimension)
-        // Call API
-        searchByLatLon()
-       
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        //Setting Region
-        let center = CLLocationCoordinate2D(latitude: (annotation?.coordinate.latitude)!, longitude: (annotation?.coordinate.longitude)!)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-        self.mapView.setRegion(region, animated: true)
-        
-        //Adding Pin
-        let pinLocation : CLLocationCoordinate2D = CLLocationCoordinate2DMake((annotation?.coordinate.latitude)!, (annotation?.coordinate.longitude)!)
-        let objectAnnotation = MKPointAnnotation()
-        objectAnnotation.coordinate = pinLocation
-        //objectAnnotation.title = "My Location"
-        self.mapView.addAnnotation(objectAnnotation)
-        
 
-    }
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        fetchedResultsController = nil
-//    }
-    
-    private func bboxString() -> String {
+    private func bboxString(latitude: Double, longitude: Double) -> String {
         // ensure bbox is bounded by minimum and maximums
-        if let latitude = annotation?.coordinate.latitude, let longitude = annotation?.coordinate.longitude {
-            let minimumLon = max(longitude - Constants.Flickr.SearchBBoxHalfWidth, Constants.Flickr.SearchLonRange.0)
+        let minimumLon = max(longitude - Constants.Flickr.SearchBBoxHalfWidth, Constants.Flickr.SearchLonRange.0)
             let minimumLat = max(latitude - Constants.Flickr.SearchBBoxHalfHeight, Constants.Flickr.SearchLatRange.0)
             let maximumLon = min(longitude + Constants.Flickr.SearchBBoxHalfWidth, Constants.Flickr.SearchLonRange.1)
             let maximumLat = min(latitude + Constants.Flickr.SearchBBoxHalfHeight, Constants.Flickr.SearchLatRange.1)
             return "\(minimumLon),\(minimumLat),\(maximumLon),\(maximumLat)"
-        } else {
-            return "0,0,0,0"
-        }
     }
     
-    func searchByLatLon () {
+    func searchByLatLon (latitude: Double, longitude: Double, handler: @escaping ([Data])->Void) {
         let methodParameters = [
             Constants.FlickrParameterKeys.Method: Constants.FlickrParameterValues.SearchMethod,
             Constants.FlickrParameterKeys.APIKey: Constants.FlickrParameterValues.APIKey,
-            Constants.FlickrParameterKeys.BoundingBox: bboxString(),
+            Constants.FlickrParameterKeys.BoundingBox: bboxString(latitude: latitude, longitude: longitude),
             Constants.FlickrParameterKeys.SafeSearch: Constants.FlickrParameterValues.UseSafeSearch,
             Constants.FlickrParameterKeys.Extras: Constants.FlickrParameterValues.MediumURL,
             Constants.FlickrParameterKeys.Format: Constants.FlickrParameterValues.ResponseFormat,
             Constants.FlickrParameterKeys.NoJSONCallback: Constants.FlickrParameterValues.DisableJSONCallback,
             Constants.FlickrParameterKeys.PerPage: Constants.FlickrParameterValues.PerPage
         ]
-        displayImageFromFlickrBySearch(methodParameters as [String:AnyObject])
+        
+        displayImageFromFlickrBySearch(methodParameters as [String:AnyObject],handler: handler)
     }
     
-    private func displayImageFromFlickrBySearch(_ methodParameters: [String: AnyObject]) {
+    private func displayImageFromFlickrBySearch(_ methodParameters: [String: AnyObject], handler: @escaping ([Data])->Void) {
+        
+        var imageData : [Data] = []
         
         // create session and request
         let session = URLSession.shared
@@ -144,30 +99,27 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
             }
             if photosArray.count == 0 {
                 displayError("No Photos Found. Search Again.")
- 
+                
             }
-//            var count = 0
             for photo in photosArray {
                 let imageUrlString = photo[Constants.FlickrResponseKeys.MediumURL] as? String
                 let imageUrl = URL(string: imageUrlString!)
-                if let imageData = try? Data(contentsOf: imageUrl!) {
-                    self.imageData.append(imageData)
+                if let data = try? Data(contentsOf: imageUrl!) {
+                    imageData.append(data)
                 }
-//                count += 1
-//                if (count == 20) {
-//                    break
-//                }
             }
-            performUIUpdatesOnMain {
-                self.collectionView.reloadData()
-            }
-            }
+            
+            handler(imageData)
+//            performUIUpdatesOnMain {
+//               // self.collectionView.reloadData()
+//            }
+        }
         // start the task!
         task.resume()
         
     }
-    // MARK: Helper for Creating a URL from Parameters
     
+    // Creating a URL from Parameters
     private func flickrURLFromParameters(_ parameters: [String:AnyObject]) -> URL {
         
         var components = URLComponents()
@@ -183,27 +135,5 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
         return components.url!
     }
     
-    // collection view
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("imageData.count = \(self.imageData.count)")
-        return self.imageData.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoAlbumViewCell", for: indexPath) as! PhotoAlbumViewCell
-        let image = self.imageData[(indexPath as NSIndexPath).row]
-        // Set the image
-        cell.photoImageView?.image = UIImage(data: image)
-        
-        return cell
-    }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath:IndexPath) {
-        
-//        let detailController = self.storyboard!.instantiateViewController(withIdentifier: "VillainDetailViewController") as! VillainDetailViewController
-//        detailController.villain = self.allVillains[(indexPath as NSIndexPath).row]
-//        self.navigationController!.pushViewController(detailController, animated: true)
-        
-    }
-}
+
