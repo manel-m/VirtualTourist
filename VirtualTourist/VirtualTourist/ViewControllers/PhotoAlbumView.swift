@@ -21,6 +21,7 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
     var dataController:DataController!
     var photo: Photo!
     var pin : Pin!
+    var photos:[Photo] = []
 //    var fetchedResultsController:NSFetchedResultsController<Photo>!
     
     override func viewDidLoad() {
@@ -32,6 +33,18 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
         flawLayout.minimumInteritemSpacing = space
         flawLayout.minimumLineSpacing = space
         flawLayout.itemSize = CGSize(width: dimension, height: dimension)
+        
+        // fetch request for Photo
+        let fetchRequest:NSFetchRequest<Photo> = Photo.fetchRequest()
+        let predicate = NSPredicate(format: "pin == %@", pin)
+        fetchRequest.predicate = predicate
+        let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        if let results = try? dataController.viewContext.fetch(fetchRequest){
+           self.photos = results
+            print("photos in store \(self.photos.count)")
+           
+        }
         
         
         
@@ -50,13 +63,6 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
                 self.collectionView.reloadData()
                 }
         }
-        
-       // fetch request for Photo
-//        let fetchRequest:NSFetchRequest<Photo> = Photo.fetchRequest()
-//        let predicate = NSPredicate(format: "pin == %@", pin)
-//        fetchRequest.predicate = predicate
-//        let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
-//        fetchRequest.sortDescriptors = [sortDescriptor]
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -74,10 +80,10 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
         
 
     }
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        fetchedResultsController = nil
-//    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        //fetchedResultsController = nil
+    }
     
 
 
