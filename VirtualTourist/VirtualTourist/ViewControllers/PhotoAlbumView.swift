@@ -42,28 +42,36 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
         fetchRequest.sortDescriptors = [sortDescriptor]
         if let results = try? dataController.viewContext.fetch(fetchRequest){
            self.photos = results
-            print("photos in store \(self.photos.count)")
-           
         }
-        
-        
-        
-        // Call API
-        searchByLatLon(latitude: (annotation?.coordinate.latitude)!, longitude: (annotation?.coordinate.longitude)!) { (results) in
-            self.imageData = results
-            for image in self.imageData {
-                let photo = Photo(context: self.dataController.viewContext)
-                photo.creationDate = Date()
-                photo.photoData = image
-                photo.pin = self.pin
-                try? self.dataController.viewContext.save()
-            }
     
-            performUIUpdatesOnMain {
-                self.collectionView.reloadData()
+        print("photos in store \(self.photos.count)")
+        if self.photos.count == 0 {
+            // Call API
+            searchByLatLon(latitude: (annotation?.coordinate.latitude)!, longitude: (annotation?.coordinate.longitude)!) { (results) in
+                self.imageData = results
+                for image in self.imageData {
+                    let photo = Photo(context: self.dataController.viewContext)
+                    photo.creationDate = Date()
+                    photo.photoData = image
+                    photo.pin = self.pin
+                    try? self.dataController.viewContext.save()
                 }
+                
+                performUIUpdatesOnMain {
+                    self.collectionView.reloadData()
+                }
+            }
+        } else {
+            for photo in photos {
+                let data = photo.photoData!
+                self.imageData.append(data)
+            }
+            
+            self.collectionView.reloadData()
         }
+
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //Setting Region
