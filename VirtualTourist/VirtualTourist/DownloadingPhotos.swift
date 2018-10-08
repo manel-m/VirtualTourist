@@ -48,11 +48,7 @@ import MapKit
             // if an error occurs, print it and re-enable the UI
             func displayError(_ error: String) {
                 print(error)
-                performUIUpdatesOnMain {
-                    // TO DO
-                }
             }
-            
             /* GUARD: Was there an error? */
             guard (error == nil) else {
                 displayError("There was an error with your request: \(error)")
@@ -91,7 +87,6 @@ import MapKit
                 displayError("Cannot find keys '\(Constants.FlickrResponseKeys.Photos)' in \(parsedResult)")
                 return
             }
-            //print(photosDictionary)
             /* GUARD: Is the "photo" key in photosDictionary? */
             guard let photosArray = photosDictionary[Constants.FlickrResponseKeys.Photo] as? [[String: AnyObject]] else {
                 displayError("Cannot find key '\(Constants.FlickrResponseKeys.Photo)' in \(photosDictionary)")
@@ -110,9 +105,6 @@ import MapKit
             }
             
             handler(imageData)
-//            performUIUpdatesOnMain {
-//               // self.collectionView.reloadData()
-//            }
         }
         // start the task!
         task.resume()

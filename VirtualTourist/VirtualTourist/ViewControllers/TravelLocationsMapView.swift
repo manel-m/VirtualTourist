@@ -44,27 +44,20 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
             self.createAnnotations()
         }
         
-        
         // Do any additional setup after loading the view, typically from a nib.
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
         // add gesture recognizer
-       
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(TravelLocationsMapView.mapLongPress(_:))) // colon needs to pass through info
         longPress.minimumPressDuration = 1.5 // in seconds
         //add gesture recognition
         mapView.addGestureRecognizer(longPress)
-        
-
     }
     @objc func mapLongPress(_ recognizer: UIGestureRecognizer) {
         if (editOn || recognizer.state != .began) {
             return
         }
-        
-        print("A long press has been detected.")
-        
         let touchedAt = recognizer.location(in: self.mapView) // adds the location on the view it was pressed
         let touchedAtCoordinate : CLLocationCoordinate2D = mapView.convert(touchedAt, toCoordinateFrom: self.mapView) // will get coordinates
         
@@ -76,7 +69,6 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
         pin.latitude = latitude
         pin.longtitude = longtitude
         pin.creationDate = Date()
-        //downloadSavePhotos()
         try? dataController.viewContext.save()
         pins.append(pin)
         let annotation = PinAnnotation(pin)
@@ -85,14 +77,11 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
     
     func deletePin (annotation : MKPointAnnotation){
         let pin = (annotation as! PinAnnotation).pin
-
         // remove pin from memory array
         let pinIndex = pins.index(of: pin!)!
         pins.remove(at: pinIndex)
-
         // remove annotation from the map
         mapView.removeAnnotation(annotation)
-
         // remove pin from persistence store
         dataController.viewContext.delete(pin!)
         try? dataController.viewContext.save()
@@ -111,8 +100,6 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
         self.editButton.isEnabled = true
         editOn = false
     }
-    
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -120,22 +107,15 @@ class TravelLocationsMapView: UIViewController, MKMapViewDelegate, CLLocationMan
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("didSelect \(view)")
         if editOn {
-            //self.mapView.removeAnnotation(view.annotation!)
             self.deletePin(annotation: view.annotation as! MKPointAnnotation)
         } else {
-//            print("pin selected")
-//            print(view.annotation?.coordinate)
             let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "PhotoAlbumView") as! PhotoAlbumView
             mapVC.annotation = view.annotation
             mapVC.dataController = dataController
             mapVC.pin = (view.annotation as! PinAnnotation).pin
             self.navigationController?.pushViewController(mapVC, animated: true)
-           
         }
-        
     }
-    
 }
 

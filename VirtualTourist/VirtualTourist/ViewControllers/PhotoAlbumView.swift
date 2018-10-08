@@ -17,25 +17,15 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
     @IBOutlet weak var flawLayout: UICollectionViewFlowLayout!
     
     var annotation : MKAnnotation?
-//    var imageData : [Data] = []
     var dataController:DataController!
-    //var photo: Photo!
     var pin : Pin!
     var photos:[Photo] = []
-   // var fetchedResultsController:NSFetchedResultsController<Photo>!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.collectionView.delegate = self
         
-        // flowLayout
-        let space: CGFloat = 3.0
-        let dimension = (view.frame.size.width - (2 * space)) / 3.0
-        
-        flawLayout.minimumInteritemSpacing = space
-        flawLayout.minimumLineSpacing = space
-        flawLayout.itemSize = CGSize(width: dimension, height: dimension)
+       self.flowLayout()
         
         // fetch request for Photo
         let fetchRequest:NSFetchRequest<Photo> = Photo.fetchRequest()
@@ -47,12 +37,18 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
            self.photos = results
         }
     
-        print("photos in store \(self.photos.count)")
         if self.photos.count == 0 {
             self.getFromFlicker()
-        } else {
-            self.collectionView.reloadData()
         }
+    }
+    // flowLayout
+    func flowLayout () {
+        let space: CGFloat = 3.0
+        let dimension = (view.frame.size.width - (2 * space)) / 3.0
+        
+        flawLayout.minimumInteritemSpacing = space
+        flawLayout.minimumLineSpacing = space
+        flawLayout.itemSize = CGSize(width: dimension, height: dimension)
     }
     
     func getFromFlicker() {
@@ -72,25 +68,9 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
             }
         }
     }
-//    func setupFetchedResultsController() {
-//        let fetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
-//        let predicate = NSPredicate(format: "pin == %@", pin)
-//        fetchRequest.predicate = predicate
-//        let sortDescriptor = NSSortDescriptor(key : "creationDate", ascending: false)
-//        fetchRequest.sortDescriptors = [sortDescriptor]
-//
-//        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-//        fetchedResultsController.delegate = self
-//        do {
-//            try fetchedResultsController.performFetch()
-//        } catch {
-//            fatalError("The fetch cannot be perfrmed: \(error.localizedDescription)")
-//        }
-//    }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //setupFetchedResultsController()
         //Setting Region
         let center = CLLocationCoordinate2D(latitude: (annotation?.coordinate.latitude)!, longitude: (annotation?.coordinate.longitude)!)
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
@@ -102,22 +82,10 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
         objectAnnotation.coordinate = pinLocation
         //objectAnnotation.title = "My Location"
         self.mapView.addAnnotation(objectAnnotation)
-        
-
     }
-
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        fetchedResultsController = nil
-//    }
-    
-
-
     // collection view
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //print("imageData.count = \(self.imageData.count)")
-        
         return self.photos.count
     }
     
@@ -127,15 +95,10 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
         let image = self.photos[(indexPath as NSIndexPath).row].photoData!
         // Set the image
         cell.photoImageView?.image = UIImage(data: image)
-        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        print("select image \(indexPath.row)")
-//        self.imageData.remove(at: (indexPath as NSIndexPath).row)
-        
         // delete image from in-memory array
         let photo = photos[indexPath.row]
         photos.remove(at: indexPath.row)
@@ -144,11 +107,6 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
         try? dataController.viewContext.save()
 
         self.collectionView.reloadData()
-
-//        let photoToDelete = fetchedResultsController.object(at: indexPath)
-//        dataController.viewContext.delete(photoToDelete)
-//        try? dataController.viewContext.save()
-        
     }
     
     @IBAction func newCollection(_ sender: Any) {

@@ -72,16 +72,16 @@
 			children = (
 				991996FD213BB03900A9610A /* AppDelegate.swift */,
 				991997112146360400A9610A /* Constants.swift */,
+				9919971321463C7A00A9610A /* GCDBlackBox.swift */,
 				99199717214F373300A9610A /* Model */,
 				99734BB4215E897200CE3CDC /* ViewControllers */,
 				99734BB5215E8C1600CE3CDC /* DownloadingPhotos.swift */,
 				991997152148CBD300A9610A /* PhotoAlbumViewCell.swift */,
+				990EC05B2155CE8A00C1405D /* PinAnnotation.swift */,
 				99199701213BB03900A9610A /* Main.storyboard */,
 				99199704213BB03900A9610A /* Assets.xcassets */,
 				99199706213BB03900A9610A /* LaunchScreen.storyboard */,
 				99199709213BB03900A9610A /* Info.plist */,
-				9919971321463C7A00A9610A /* GCDBlackBox.swift */,
-				990EC05B2155CE8A00C1405D /* PinAnnotation.swift */,
 			);
 			path = VirtualTourist;
 			sourceTree = "<group>";
