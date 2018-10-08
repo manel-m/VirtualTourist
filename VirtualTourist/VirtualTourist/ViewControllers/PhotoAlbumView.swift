@@ -150,4 +150,14 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
 //        try? dataController.viewContext.save()
         
     }
+    
+    @IBAction func newCollection(_ sender: Any) {
+        for photo in photos {
+            dataController.viewContext.delete(photo)
+        }
+        try? dataController.viewContext.save()
+        photos.removeAll()
+        getFromFlicker()
+        
+    }
 }
