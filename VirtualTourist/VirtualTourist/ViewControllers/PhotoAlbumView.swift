@@ -53,7 +53,7 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
     
     func getFromFlicker() {
         // Call API
-        searchByLatLon(latitude: (annotation?.coordinate.latitude)!, longitude: (annotation?.coordinate.longitude)!) { (results) in
+        DownloadingPhotos.searchByLatLon(latitude: (annotation?.coordinate.latitude)!, longitude: (annotation?.coordinate.longitude)!) { (results) in
             for image in results {
                 let photo = Photo(context: self.dataController.viewContext)
                 photo.creationDate = Date()

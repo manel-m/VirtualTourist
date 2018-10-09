@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 import MapKit
 
-    private func bboxString(latitude: Double, longitude: Double) -> String {
+class DownloadingPhotos {
+    private static func bboxString(latitude: Double, longitude: Double) -> String {
         // ensure bbox is bounded by minimum and maximums
         let minimumLon = max(longitude - Constants.Flickr.SearchBBoxHalfWidth, Constants.Flickr.SearchLonRange.0)
             let minimumLat = max(latitude - Constants.Flickr.SearchBBoxHalfHeight, Constants.Flickr.SearchLatRange.0)
@@ -19,7 +20,7 @@ import MapKit
             return "\(minimumLon),\(minimumLat),\(maximumLon),\(maximumLat)"
     }
     
-    func searchByLatLon (latitude: Double, longitude: Double, handler: @escaping ([Data])->Void) {
+    static func searchByLatLon (latitude: Double, longitude: Double, handler: @escaping ([Data])->Void) {
         let methodParameters = [
             Constants.FlickrParameterKeys.Method: Constants.FlickrParameterValues.SearchMethod,
             Constants.FlickrParameterKeys.APIKey: Constants.FlickrParameterValues.APIKey,
@@ -34,7 +35,7 @@ import MapKit
         displayImageFromFlickrBySearch(methodParameters as [String:AnyObject],handler: handler)
     }
     
-    private func displayImageFromFlickrBySearch(_ methodParameters: [String: AnyObject], handler: @escaping ([Data])->Void) {
+    private static func displayImageFromFlickrBySearch(_ methodParameters: [String: AnyObject], handler: @escaping ([Data])->Void) {
         
         var imageData : [Data] = []
         
@@ -112,7 +113,7 @@ import MapKit
     }
     
     // Creating a URL from Parameters
-    private func flickrURLFromParameters(_ parameters: [String:AnyObject]) -> URL {
+    private static func flickrURLFromParameters(_ parameters: [String:AnyObject]) -> URL {
         
         var components = URLComponents()
         components.scheme = Constants.Flickr.APIScheme
@@ -126,6 +127,7 @@ import MapKit
         }
         return components.url!
     }
+}
     
     
 
