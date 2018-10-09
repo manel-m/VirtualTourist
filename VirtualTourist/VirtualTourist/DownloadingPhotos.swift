@@ -21,6 +21,11 @@ class DownloadingPhotos {
     }
     
     static func searchByLatLon (latitude: Double, longitude: Double, handler: @escaping ([Data])->Void) {
+        // choosing a random page.
+        var page: Int {
+            let numberOfPages: Int = 4000 / Int(Constants.FlickrParameterValues.PerPage)!
+                return Int(arc4random_uniform(UInt32(numberOfPages)) + 1)
+        }
         let methodParameters = [
             Constants.FlickrParameterKeys.Method: Constants.FlickrParameterValues.SearchMethod,
             Constants.FlickrParameterKeys.APIKey: Constants.FlickrParameterValues.APIKey,
@@ -29,7 +34,8 @@ class DownloadingPhotos {
             Constants.FlickrParameterKeys.Extras: Constants.FlickrParameterValues.MediumURL,
             Constants.FlickrParameterKeys.Format: Constants.FlickrParameterValues.ResponseFormat,
             Constants.FlickrParameterKeys.NoJSONCallback: Constants.FlickrParameterValues.DisableJSONCallback,
-            Constants.FlickrParameterKeys.PerPage: Constants.FlickrParameterValues.PerPage
+            Constants.FlickrParameterKeys.PerPage: Constants.FlickrParameterValues.PerPage,
+            Constants.FlickrParameterKeys.Page: "\(page)"
         ]
         
         displayImageFromFlickrBySearch(methodParameters as [String:AnyObject],handler: handler)
