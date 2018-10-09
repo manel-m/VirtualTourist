@@ -23,7 +23,7 @@ class DownloadingPhotos {
     static func searchByLatLon (latitude: Double, longitude: Double, handler: @escaping ([Data])->Void) {
         // choosing a random page.
         var page: Int {
-            let numberOfPages: Int = 4000 / Int(Constants.FlickrParameterValues.PerPage)!
+            let numberOfPages: Int = 400 / Int(Constants.FlickrParameterValues.PerPage)!
                 return Int(arc4random_uniform(UInt32(numberOfPages)) + 1)
         }
         let methodParameters = [

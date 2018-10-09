@@ -24,6 +24,7 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView.delegate = self
+        self.collectionView.reloadData() ///////////////////////
         
        self.flowLayout()
         
@@ -86,15 +87,21 @@ class PhotoAlbumView: UIViewController ,UICollectionViewDataSource , UICollectio
     // collection view
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.photos.count
+        if self.photos.count > 0 {
+            return self.photos.count
+        }
+        return Int(Constants.FlickrParameterValues.PerPage)!
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoAlbumViewCell", for: indexPath) as! PhotoAlbumViewCell
-        let image = self.photos[(indexPath as NSIndexPath).row].photoData!
-        // Set the image
-        cell.photoImageView?.image = UIImage(data: image)
+        if indexPath.row < photos.count  {
+            let image = self.photos[(indexPath as NSIndexPath).row].photoData!
+            // Set the image
+            cell.photoImageView?.image = UIImage(data: image)
+        }
+        
         return cell
     }
     
